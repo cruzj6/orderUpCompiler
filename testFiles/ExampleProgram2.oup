@@ -1,0 +1,39 @@
+/* This program goes through a loop
+ * and outputs if the loop counter 'i'
+ * is even(or 0) or odd, and breaks
+ * the loop when i is 6
+ */
+
+//Entry point, main function
+breakfastOrder main() orderOf wholeMilk
+{
+  //Declarations of variables
+  i @ wholeMilk;
+  loopCount @ wholeMilk <- 10;
+  loopString @ breakfastItems <- "i is even or 0!\n";
+
+  //Loop structure
+  roll(i : 0 -> (loopCount - 1) stepBy 1)
+  {
+    //fresh is conditional if
+    fresh((i % 2) <==> 0)
+    {
+      //Print to standard out stream
+      serveOut(loopString);
+
+      //If i is 6 break it
+      fresh(i <==> 6)
+      {
+        serveOut("Breaking the Loop! We're done!\n");
+        break;
+      }
+    }
+    expired //Conditional Else
+    {
+      serveOut("i is Odd!\n");
+    }
+  }
+
+  //orderUp returns
+  orderUp 0;
+}

@@ -1,0 +1,37 @@
+#Definitions
+CC = g++
+INC_DIR = headers
+SRC_DIR = ./source
+OBJ_DIR = ./objects
+CFLAGS  = -I./headers -Wall
+
+#Collections
+SRCS = $(SRC_DIR)/token.cpp	$(SRC_DIR)/word.cpp	$(SRC_DIR)/type.cpp	$(SRC_DIR)/lexer.cpp
+OBJS = $(OBJ_DIR)/token.o	$(OBJ_DIR)/word.o	$(OBJ_DIR)/type.o	$(OBJ_DIR)/lexer.o
+DEPS = $(INC_DIR)/lexer.h	$(INC_DIR)/Number.h	$(INC_DIR)/real.h	$(INC_DIR)/tag.h\
+	$(INC_DIR)/token.h	$(INC_DIR)/type.h	$(INC_DIR)/word.h
+
+###############################################
+# Build all of the lexer library object files #
+###############################################
+all: $(OBJS)
+
+$(OBJ_DIR)/lexer.o: $(OBJ_DIR)/word.o $(SRC_DIR)/lexer.cpp
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/lexer.cpp -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJS)
+	rm -f $(OBJ_DIR)/lexerTest.o
+	rm -f lexerTest
+
+######################################
+#	Executable for testing the lexer   #
+######################################
+lexerTest: $(OBJ_DIR)/lexerTest.o $(OBJS)
+	$(CC) -o lexerTest $(OBJS) $(OBJ_DIR)/lexerTest.o
+
+$(OBJ_DIR)/lexerTest.o: $(SRC_DIR)/lexerTest.cpp
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/lexerTest.cpp -o $@

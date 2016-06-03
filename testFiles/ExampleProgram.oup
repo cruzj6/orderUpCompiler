@@ -1,0 +1,41 @@
+/* This program outputs the
+ * two strings you input
+ */
+
+//function declarations, no return type
+breakfastOrder outString(str1 @ breakfastItems, str2 @ breakfastItems)
+
+breakfastOrder main() orderOf wholeMilk
+{
+  //Declarations and assignments
+  string1 @ breakfastItems;
+  string2 @ breakfastItems;
+  instString @ breakfastItems <- "Enter first word\n";
+  inst2String @ breakfastItems <- "Enter second word\n";
+
+  //Print to standard out
+  serveOut(instString);
+
+  //Read input from standard in stream
+  string1 <- orderIn();
+
+  //Second string
+  serveOut(inst2String);
+  string2 <- orderIn();
+
+  //Call function
+  outString(string1, string2);
+
+  orderUp 0;
+}
+
+breakfastOrder outString(str1 @ breakfastItems, str2 @ breakfastItems)
+  {
+      serveOut("You Entered: ");
+      serveOut(str1);
+      serveOut(" and ");
+      serveOut(str2);
+
+      //No return type
+      orderUp;
+  }
