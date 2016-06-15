@@ -1,17 +1,12 @@
-/* This program outputs the
- * two strings you input
- */
-
-//function declarations, no return type
-breakfastOrder outString(str1 @ breakfastItems, str2 @ breakfastItems)
-
 breakfastOrder main() orderOf wholeMilk
 {
   //Declarations and assignments
-  string1 @ breakfastItems;
-  string2 @ breakfastItems;
-  instString @ breakfastItems <- "Enter first word\n";
-  inst2String @ breakfastItems <- "Enter second word\n";
+  string1 @ breakfastItem[22];
+  string2 @ breakfastItem[15];
+  instString @ breakfastItem[50];
+  inst2String @ breakfastItem[25];
+
+  instString
 
   //Print to standard out
   serveOut(instString);

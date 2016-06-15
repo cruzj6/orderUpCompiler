@@ -8,15 +8,20 @@
 breakfastOrder main() orderOf wholeMilk
 {
   //Declarations of variables
-  i @ wholeMilk;
-  loopCount @ wholeMilk <- 10;
-  loopString @ breakfastItems <- "i is even or 0!\n";
+  wholeMilk @ i;
+  wholeMilk @ loopCount;
+  wholeMilk[4] @ nums;
+  breakfastItem[50] @ loopString;
 
+  nums[] <- 5;
+  loopCount <- 10;
+  loopString <- "i is even or 0!\n";
+  loopString[5] <- "2";
   //Loop structure
   roll(i : 0 -> (loopCount - 1) stepBy 1)
   {
     //fresh is conditional if
-    fresh((i % 2) <==> 0)
+    fresh(0 <==> (i * 2))
     {
       //Print to standard out stream
       serveOut(loopString);

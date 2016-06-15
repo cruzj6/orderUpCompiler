@@ -1,3 +1,4 @@
+#pragma once
 class Real : public Token{
 public:
     float value;

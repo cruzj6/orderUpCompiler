@@ -4,11 +4,11 @@
 class Type : public Word{
 public:
   int width;
-  static Type* str; //TODO width
   static Type* ch;
   static Type* integer;
   static Type* floating;
   static Type* boolean;
+  static Type* function;
 
   Type(std::string l, int t, int w) : Word(l,t)
   {

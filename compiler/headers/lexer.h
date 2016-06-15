@@ -7,6 +7,7 @@
 #include "type.h"
 #include "number.h"
 #include "real.h"
+#include "array.h"
 
 class Lexer{
 public:

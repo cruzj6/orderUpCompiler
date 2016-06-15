@@ -36,6 +36,7 @@ enum Tag{
   NUM,
   FLOATING,
   STLIT,
+  STRING,
   ID,
   BASICTYPE,
   FUNC,
@@ -46,5 +47,8 @@ enum Tag{
   BLOCKEND,
   GROUPSTART,
   GROUPEND,
-  ENDOFFILE
+  ENDOFFILE,
+  OUT,
+  IN,
+  INDEX
 };

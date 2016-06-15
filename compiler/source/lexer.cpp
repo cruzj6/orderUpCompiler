@@ -6,11 +6,14 @@
 void Lexer::buildDefaults()
 {
   //Reserve Types
-  reserve(Type::str);
   reserve(Type::ch);
   reserve(Type::integer);
   reserve(Type::floating);
   reserve(Type::boolean);
+  reserve(Type::function);
+
+  //Reserve this as a word, special case
+  //reserve(new Word("breakfastItems", STRING));
 
   //Reserve base words (operators)
   reserve(Word::LogicAnd);
@@ -44,12 +47,13 @@ void Lexer::buildDefaults()
   reserve(Word::LineEnd);
 
   //Reserve word type terminals
+  reserve(new Word("serveOut", OUT));
+  reserve(new Word("orderIn", IN));
   reserve(new Word("fresh", IF));
   reserve(new Word("?fresh", ELSEIF));
   reserve(new Word("expired", ELSE));
   reserve(new Word("roll", FOR));
   reserve(new Word("stepBy", STEP));
-  reserve(new Word("breakfastOrder", FUNC));
   reserve(new Word("orderOf", RETTYPE));
   reserve(new Word("fresh", IF));
 }
@@ -191,6 +195,7 @@ Token* Lexer::scan()
       while(true)
       {
         readNextCh();
+        if(peek == '\n') curLine++;
         if(peek == '*')
         {
           readNextCh();
@@ -248,7 +253,7 @@ Token* Lexer::scan()
         readNextCh();
 
         //This is incorrect token to be a number or a float
-        if(!isdigit(peek)) return new Token(ss.str());
+        if(!isdigit(peek)) return new Token(stoi(ss.str()));
       }
     }
 
@@ -280,11 +285,12 @@ Token* Lexer::scan()
 
     //If it is already in the map return it
     if(it != words.end())
+    {
       return words[identifier];
-
+    }
     else
     {
-      //If not creat it and return it
+      //If not create it and return it
       words[identifier] = new Word(identifier, ID);
       return words[identifier];
     }
@@ -311,9 +317,13 @@ Token* Lexer::scan()
   }
 
   //No identification for the token given
-  readNextCh();
   if(isEOF) return new Token(ENDOFFILE);
-  else return new Token(peek);
+  else {
+    char temp = peek;
+    readNextCh();
+    return new Token((int)temp);
+  }
+
 }
 
 bool Lexer::getIsEOF()

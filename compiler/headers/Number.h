@@ -1,3 +1,4 @@
+#pragma once
 class Number : public Token{
 public:
   int value;

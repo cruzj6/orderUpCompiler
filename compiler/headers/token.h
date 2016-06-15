@@ -6,21 +6,25 @@
 class Token{
 public:
   int tag;
+  std::string unknownToken;
   std::list<int> asciiValuesTag;
   Token(int t)
   {
     tag = t;
   }
 
+  //For unknown tokens
   Token(std::string t)
   {
     //Get ascii for each character
     for(int i = 0; i < t.length(); i++)
     {
       //Give the tag some arbitrary value
-      tag += t[i];
+      tag = -1;
       asciiValuesTag.push_back(t[i]);
     }
+
+    unknownToken = t;
   }
 
   inline virtual std::string getString()
