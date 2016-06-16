@@ -10,7 +10,7 @@ public:
     std::string getString()
     {
       std::stringstream ss;
-      ss << "REAL: value is " << value <<  " Tag is " << tag << std::endl;
+      ss << "REAL: value is " << value <<  " Tag is " << tag;
       return ss.str();
     }
 };

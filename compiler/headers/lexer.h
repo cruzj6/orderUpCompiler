@@ -31,11 +31,14 @@ public:
 
   //Destructor
   inline ~Lexer(){
-      //This should get rid of everything in the Words too
+      //This should get rid of everything in the Words and types too as
+      //they are reserved
       std::map<std::string, Token*>::iterator it;
       for(it = words.begin(); it != words.end(); it++){
         delete it->second;
       }
+
+      inFile.close();
   }
 private:
   std::map<std::string, Token*> words;

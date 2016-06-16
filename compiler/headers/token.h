@@ -38,12 +38,12 @@ public:
       {
         ss << static_cast<char>(*it);
       }
-      ss << std::endl;
-
     }
-    else ss << "TOKEN: Tag is " << static_cast<char>(tag) << std::endl;
+    else ss << "TOKEN: Tag is " << static_cast<char>(tag);
     return ss.str();
   }
 
-  virtual ~Token(){}
+  virtual ~Token(){
+
+  }
 };

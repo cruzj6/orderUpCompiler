@@ -38,7 +38,11 @@ public:
   Expr* factor();
   ArrayAccess* offset(Id* id);
   Type* type();
-
+  ~Analyzer(){
+    delete lexer;
+    delete top;
+    delete curToken;
+  }
 private:
   Lexer* lexer;
   Env* top;

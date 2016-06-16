@@ -20,7 +20,7 @@ public:
   {
     std::stringstream ss;
     ss << "TYPE: lexeme is " << lexeme <<  " | Tag is " << tag << "."
-        << " | Width is "<< width << std::endl;
+        << " | Width is "<< width;
     return ss.str();
   }
 };

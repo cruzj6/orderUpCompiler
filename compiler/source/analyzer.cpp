@@ -35,6 +35,7 @@ void Analyzer::program()
 
   try{
     Stmnt* s = functions(); //Get the syntax/parse tree
+    s->printNode();
   }
   catch(Error e)
   {
@@ -176,7 +177,11 @@ Stmnt* Analyzer::block(){
   Stmnt* st = stmnts(); //List of our statements
   match(BLOCKEND);// }
 
+  Env* tempTop = top;
   top = saveTop;
+
+  //Delete the sub symbol table when we exit
+  //TODO: delete tempTop;
   return st;
 }
 
@@ -418,7 +423,7 @@ Expr* Analyzer::factor()
     case NUM:
       n = new Const(curToken, Type::integer);
       std::cout << curToken->getString() << std::endl;
-      move();  
+      move();
       return n;
 
     case FLOATING:
@@ -512,7 +517,7 @@ ArrayAccess* Analyzer::offset(Id* id)
 
   Type* type = id->type;
   Expr* widthE = new Const(type->width);
-  Expr* arrayElem = new Arithmetic(new Token(MULT), elemExpr, widthE);
+  Expr* arrayElem = new Arithmetic(Word::Mult, elemExpr, widthE);
 
   ArrayAccess* aa = new ArrayAccess(id, arrayElem, id->type);
   return aa;

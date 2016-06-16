@@ -43,7 +43,9 @@ public:
   inline std::string getString()
   {
     std::stringstream ss;
-    ss << "WORD: lexeme is " << lexeme <<  " | Tag is " << tag << std::endl;
+    std::string str = lexeme;
+    str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+    ss << "WORD: lexeme is " << str <<  " | Tag is " << tag;
     return ss.str();
   }
 

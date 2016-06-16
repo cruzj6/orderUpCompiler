@@ -13,7 +13,7 @@ breakfastOrder main() orderOf wholeMilk
   wholeMilk[4] @ nums;
   breakfastItem[50] @ loopString;
 
-  nums[] <- 5;
+  nums[2] <- 5;
   loopCount <- 10;
   loopString <- "i is even or 0!\n";
   loopString[5] <- "2";

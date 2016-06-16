@@ -14,6 +14,16 @@ public:
   {
     prev = pre;
   }
+  ~Env()
+  {
+    //clean up map
+    std::map<Token*, Id*>::iterator it;
+    for(it = symbolTableMap.begin(); it != symbolTableMap.end(); it++)
+    {
+      delete it->first;
+      delete it->second;
+    }
+  }
 
   void addSymbol(Token* tok, Id* id);
   Id* getIdForToken(Token* tok);

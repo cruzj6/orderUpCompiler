@@ -20,7 +20,7 @@ public:
   {
     std::stringstream ss;
     ss << "Array: type is " << lexeme <<  " | Tag is " << tag << "."
-        << " | Width is "<< getWidth() << std::endl;
+        << " | Width is "<< getWidth();
     return ss.str();
   }
 
