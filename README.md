@@ -12,13 +12,10 @@ From ./compiler directory with g++ installed run:
   ```
   make analyzerTest
   ```
-
 ###Make Lexer Test Program
 From ./compiler directory with g++ installed run:
   ```
   make lexerTest
-
-
   ```
-#Run Test Program
+##Run Test Program
 Run: ```analyzerTest *.oup``` or ```lexerTest *.oup```
