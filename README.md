@@ -17,4 +17,8 @@ From ./compiler directory with g++ installed run:
 From ./compiler directory with g++ installed run:
   ```
   make lexerTest
+
+
   ```
+#Run Test Program
+Run: ```analyzerTest *.oup``` or ```lexerTest *.oup```
