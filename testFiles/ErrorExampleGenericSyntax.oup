@@ -1,0 +1,10 @@
+breakfastOrder main() orderOf wholeMilk
+{
+  wholeMilk @ i;
+  roll(i: 0 -> (i * [2) stepBy 1)
+  {
+    serveOut("hi");
+  }
+
+  orderUp 0;
+}

@@ -1,0 +1,7 @@
+percentMilk[] @ i;
+
+breakfastOrder main() orderOf wholeMilk
+{
+
+  orderUp 0;
+}

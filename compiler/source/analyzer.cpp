@@ -33,11 +33,11 @@ void Analyzer::program()
   top = new Env(NULL);
   move();
 
-    Stmnt* s = functions(); //Get the syntax/parse tree
+  Stmnt* s = functions(); //Get the syntax/parse tree
 
-    #ifdef DEBUG
-    s->printNode();
-    #endif
+  #ifdef DEBUG
+  s->printNode();
+  #endif
 
 }
 
@@ -225,6 +225,10 @@ Stmnt* Analyzer::stmnt(){
     Expr* num1 = expr();
     match(FLOW); // ->
     Expr* num2 = expr();
+    if(curToken->tag != STEP)
+    {
+      throwError("Loops require \"stepBy\" loop incrementation");
+    }
     match(STEP);
     Expr* step = expr();
     match(GROUPEND);
@@ -566,6 +570,10 @@ void Analyzer::declaration(){
 
   //Parse the ID
   Token* idTok = curToken;
+  if(curToken->tag != ID)
+  {
+    throwError("Variable name required for assignment\n");
+  }
   match(ID);
 
   //Add it to the symbol table
@@ -579,11 +587,19 @@ void Analyzer::declaration(){
 
 Type* Analyzer::type(){
   Type* t = dynamic_cast<Type*>(curToken);
+  if(curToken->tag != BASICTYPE)
+  {
+    throwError("Missing required type\n");
+  }
   match(BASICTYPE);
   if(curToken->tag == '[')
   {
     move();
     Number* n = dynamic_cast<Number*>(curToken);
+    if(curToken->tag == ']')
+    {
+      throwError("Must Specify array size\n");
+    }
     match(NUM);
 
     //Create array type item
