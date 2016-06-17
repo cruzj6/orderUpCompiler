@@ -17,5 +17,5 @@ From ./compiler directory with g++ installed run:
   ```
   make lexerTest
   ```
-##Run Test Program
+##Run Test Programs
 Run: ```analyzerTest <sourceFile>.oup``` or ```lexerTest <sourceFile>.oup```
