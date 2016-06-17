@@ -18,4 +18,4 @@ From ./compiler directory with g++ installed run:
   make lexerTest
   ```
 ##Run Test Program
-Run: ```analyzerTest *.oup``` or ```lexerTest *.oup```
+Run: ```analyzerTest <sourceFile>.oup``` or ```lexerTest <sourceFile>.oup```
