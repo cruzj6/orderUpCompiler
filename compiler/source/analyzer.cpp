@@ -33,44 +33,55 @@ void Analyzer::program()
   top = new Env(NULL);
   move();
 
-  try{
     Stmnt* s = functions(); //Get the syntax/parse tree
+
+    #ifdef DEBUG
     s->printNode();
-  }
-  catch(Error e)
-  {
-    //Throw errors tacking on line number
-    throwError(e.ShowReason());
-  }
+    #endif
+
 }
 
 void Analyzer::match(int toMatch)
 {
+  #ifdef DEBUG
   Token* saveToken = curToken;
   std::cout << "=============Match===========" << std::endl;
+  #endif
+
   if(curToken->tag == -1)
   {
     std::stringstream ss;
     ss << "Unknown token: " << curToken->unknownToken << "\n";
+
+    #ifdef DEBUG
     std::cout << saveToken->getString() << std::endl;
+    #endif
+
     throwError(ss.str());
   }
   else if(curToken->tag == toMatch)
   {
+    #ifdef DEBUG
     std::cout << "Good" << std::endl;
     std::cout << saveToken->getString() << std::endl;
+    #endif
+
     move();
   }
   else
   {
+    #ifdef DEBUG
     std::cout << saveToken->getString() << std::endl;
+    #endif
+
     std::stringstream ss;
-    ss << "Expected token tag: " << toMatch << "\n";
+    ss << "Unexpected token: " << curToken->getName() << "\n";
 
     throwError(ss.str());
   }
-
+  #ifdef DEBUG
   std::cout << "=============================" << std::endl;
+  #endif
 }
 
 void Analyzer::move()
@@ -89,24 +100,24 @@ Stmnt* Analyzer::functions()
   //function so build each time
   declarations();
   Stmnt* node;
+  if(curToken->tag == ENDOFFILE) return NULL;
 
-  if(curToken->tag == ENDOFFILE)
-  {
-    return NULL;
-  }
   //Create new sequence for each statement, passing it function as statement
   node = new Seq(function(), functions());
   return node;
 }
 
 Stmnt* Analyzer::function(){
+  std::vector<Id*> params;
+
   //A function should now start
   match(FUNC); //breakfastOrder
   Token* funcTok = curToken;
   match(ID); //func name
+  Type* t = NULL;
 
   //Add the func to symbol table, its of type function
-  top->addSymbol(funcTok, new Id(funcTok, Type::function, used));
+  top->addSymbol(funcTok, new FunctionId(funcTok, Type::function, used, t));
   used = used + Type::function->width;
 
   //Function scope symbol table to top
@@ -114,16 +125,13 @@ Stmnt* Analyzer::function(){
   top = new Env(top);
   match(GROUPSTART); //open paren
 
-  std::vector<Id*> params;
-
   //If no close paren yet, this must be declaration for param
   //Allocate space for all of the params
   if(curToken->tag != GROUPEND)
   {
     //Expect declaration param
     do{
-      move();
-
+      if(curToken->tag == PARAMSEP) move();
       //Parse the type
       Type* t = type();
       match(ASSIGNTYPE); //@
@@ -141,22 +149,14 @@ Stmnt* Analyzer::function(){
 
     match(GROUPEND);
   }
-  else{
-    match(GROUPEND);
-  }
-  Type* t = NULL;
-  if(curToken->tag == RETTYPE)
-  {
-    //Func return type store
-    match(RETTYPE);
-    t = dynamic_cast<Type*>(curToken);
-    match(BASICTYPE);
-  }
+  else match(GROUPEND);
+
+  //Do we have a return tag?
+  if(curToken->tag == RETTYPE) {match(RETTYPE);t = type();}
 
   //Start of the function block, do this here to keep symbol table consistent with params
   match(BLOCKSTART);// {
   declarations();
-
   Stmnt* funcBlock = stmnts(); //List of our statements
   Function* f = new Function(params, funcBlock, t);
   match(BLOCKEND);// }
@@ -176,12 +176,8 @@ Stmnt* Analyzer::block(){
   //Stmnts
   Stmnt* st = stmnts(); //List of our statements
   match(BLOCKEND);// }
-
   Env* tempTop = top;
   top = saveTop;
-
-  //Delete the sub symbol table when we exit
-  //TODO: delete tempTop;
   return st;
 }
 
@@ -195,6 +191,13 @@ Stmnt* Analyzer::stmnts(){
   return node;
 }
 
+/*******EBNF********
+ <stmnt> -> orderUp (<expr> | E);
+	| id <- <expr>;
+	| break;
+	| roll(id : (<expr>) -> (<expr>) stepBy (<expr>))<block>
+	| fresh(<bool>) <block> [?fresh(<bool>) ]* [expired <block>]
+*/
 Stmnt* Analyzer::stmnt(){
   if(curToken->tag == FOR)
   {
@@ -234,11 +237,10 @@ Stmnt* Analyzer::stmnt(){
    {
      move();
      match(GROUPSTART);
-     Expr* cond = expr();
+     Expr* cond = expr(); //T/F Condition
      match(GROUPEND);
-     Stmnt* st = stmnt();
-     std::cout << "THE TOKEN: " << curToken->getString() << std::endl;
-     Stmnt* elseChain = Else();
+     Stmnt* st = stmnt(); //The block
+     Stmnt* elseChain = Else(); //ifelse to else chain
      return new Fresh(cond, st, elseChain);
    }
    else if(curToken->tag == BLOCKSTART)
@@ -253,13 +255,21 @@ Stmnt* Analyzer::stmnt(){
    }
    else if(curToken->tag == RETSTMNT)
    {
+     //Return from function tag
      match(RETSTMNT);
+
+     //Line end, this means void retuen
+     if(curToken->tag == LINEEND) {
+       match(LINEEND);
+       return new Return(NULL);
+     }
      Expr* retStmnt = expr();
      match(LINEEND);
      return new Return(retStmnt);
    }
    else if(curToken->tag == OUT)
    {
+     //Print to stdout built in function tag
      match(OUT);
      match(GROUPSTART);
      Expr* e = expr();
@@ -270,21 +280,49 @@ Stmnt* Analyzer::stmnt(){
    else //Assume assignment statement
    {
      Id* id = top->getIdForToken(curToken);
+
+     //Declared?
      if(id == NULL)
      {
        std::stringstream ss;
-       ss << "Identifier never declared: " << curToken->getString() << "\n";
+       ss << "Identifier never declared: " << curToken->getName() << "\n";
        throwError(ss.str());
      }
      match(ID);
+     //<-
      if(curToken->tag == ASSIGN){
-
-       //Should be an assignment
        match(ASSIGN);
        Expr* val = expr();
        match(LINEEND);
        Assign* a = new Assign(id, val);
        return a;
+     }
+     //If this is meant to be a function call
+     if(curToken->tag == GROUPSTART)
+     {
+       //Error if this is not a function
+       if(id->type != Type::function)
+       {
+         std::stringstream ss;
+         ss << "ERROR: " <<  id->getToken()->getName() << " is not a function!";
+         throwError(ss.str());
+       }
+       move();
+       std::vector<Expr*> params;
+       if(curToken->tag != GROUPEND)
+       {
+         do{
+           if(curToken->tag == PARAMSEP) move();
+           params.push_back(expr());
+         }while(curToken->tag == PARAMSEP);
+       }
+       match(GROUPEND);
+       match(LINEEND);
+       Expr* fc =
+        new FunctionCall(id->getToken(), dynamic_cast<FunctionId*>(id)->retType, params);
+
+        FunctionStmnt* fs = new FunctionStmnt(fc);
+        return fs;
      }
      else{
       ArrayAccess* aa = offset(id);
@@ -300,13 +338,16 @@ Stmnt* Analyzer::stmnt(){
 //Recursively create the chain of else if's to else's
 Stmnt* Analyzer::Else()
 {
-  Stmnt* elseSt;
+  Stmnt* elseSt = NULL;
   if(curToken->tag == ELSEIF){
+    move();
     match(GROUPSTART);
     Expr* condEIf = expr();
     match(GROUPEND);
     Stmnt* stEIf = stmnt();
-    elseSt = new QFresh(condEIf, stEIf, Else());
+    Stmnt* e = Else();
+    elseSt = new QFresh(condEIf, stEIf, e);
+    //elseSt->printNode();
   }
   else if(curToken->tag == ELSE)
   {
@@ -317,11 +358,18 @@ Stmnt* Analyzer::Else()
 
   return elseSt;
 }
+
+/******EBNF******
+<expr> -> <mult> | id | <factor> | <sum>
+<mult> -> <expr> (* | / ) (<expr> | (<sum>))
+<sum> -> <expr> (+ | -) ((<expr>))
+*/
 Expr* Analyzer::expr(){
   Expr* e = boolean();
   return e;
 }
 
+//<bool> -> (bacon | sausage | <equality> | <logicBool>)  [ || <bool>]
 Expr* Analyzer::boolean(){
   Expr* e = logicBool();
   while(curToken->tag == OR)
@@ -333,6 +381,7 @@ Expr* Analyzer::boolean(){
   return e;
 }
 
+//<logicBool> -> <bool> && <bool>
 Expr* Analyzer::logicBool(){
   Expr* e = equality();
   while(curToken->tag == AND)
@@ -344,6 +393,7 @@ Expr* Analyzer::logicBool(){
   return e;
 }
 
+//<equality> -> <bool> <equalityOp> <bool>
 Expr* Analyzer::equality(){
   Expr* e = equalityOp();
   if(curToken->tag == EQ || curToken->tag == NEQ){
@@ -354,6 +404,7 @@ Expr* Analyzer::equality(){
   return e;
 }
 
+//<equalityOp> -> <==> | <=!=> | > | < | >= | <=
 Expr* Analyzer::equalityOp(){
   Expr* e = sum();
   if(curToken->tag == LE ||
@@ -381,8 +432,20 @@ Expr* Analyzer::sum(){
 
 Expr* Analyzer::mult()
 {
-  Expr* e = unary();
+  Expr* e = mod();
   if(curToken->tag == MULT || curToken->tag == DIV)
+  {
+    Token* saveToken = curToken;
+    move();
+    return new Arithmetic(saveToken, e, mod());
+  }
+  return e;
+}
+
+Expr* Analyzer::mod()
+{
+  Expr* e = unary();
+  if(curToken->tag == MOD)
   {
     Token* saveToken = curToken;
     move();
@@ -422,7 +485,6 @@ Expr* Analyzer::factor()
 
     case NUM:
       n = new Const(curToken, Type::integer);
-      std::cout << curToken->getString() << std::endl;
       move();
       return n;
 
@@ -443,27 +505,50 @@ Expr* Analyzer::factor()
 
     case ID:
       n = top->getIdForToken(curToken);
+
+      //Declared?
       if(n == NULL)
       {
         std::stringstream ss;
-        ss << curToken->getString() << "undeclared\n";
+        ss << "Variable " << curToken->getName() << " undeclared\n";
         throwError(ss.str());
       }
-      move();
+      match(ID);
+
+      //Check if this is a function call identifier
+      if(curToken->tag == GROUPSTART)
+      {
+        match(GROUPSTART);
+        std::vector<Expr*> params;
+        if(curToken->tag != GROUPEND)
+        {
+          //Build params for call
+          do{
+            if(curToken->tag == PARAMSEP) move();
+            params.push_back(expr());
+          }while(curToken->tag == PARAMSEP);
+        }
+
+        //Build funccall node
+        FunctionCall* fc = new FunctionCall(n->op, n->type, params);
+        return fc;
+      }
       return n;
 
     case IN:
+      //stdin line
       n = new OrderIn();
-      move();
+      match(IN);
+      match(GROUPSTART);
+      match(GROUPEND);
       return n;
 
     case STLIT:
+      //a string literal token
       Word* str = dynamic_cast<Word*>(curToken);
       n = new Const(curToken, new Array(Type::ch, str->lexeme.length()));
       move();
       return n;
-
-
   }
 }
 void Analyzer::declarations()
@@ -485,14 +570,16 @@ void Analyzer::declaration(){
 
   //Add it to the symbol table
   top->addSymbol(idTok, new Id(idTok, t, used));
-  std::cout << "Added: " << idTok->getString() << std::endl;
   used = used + t->width;
+
+  #ifdef DEBUG
+  std::cout << "Added: " << idTok->getString() << std::endl;
+  #endif
 }
 
 Type* Analyzer::type(){
   Type* t = dynamic_cast<Type*>(curToken);
   match(BASICTYPE);
-
   if(curToken->tag == '[')
   {
     move();
@@ -509,8 +596,11 @@ Type* Analyzer::type(){
 
 ArrayAccess* Analyzer::offset(Id* id)
 {
-  Expr* elemExpr;
+  #ifdef DEBUG
   std::cout << "ACCESSING ARRAY" << std::endl;
+  #endif
+
+  Expr* elemExpr;
   match('[');
   elemExpr = expr();
   match(']');
@@ -518,7 +608,6 @@ ArrayAccess* Analyzer::offset(Id* id)
   Type* type = id->type;
   Expr* widthE = new Const(type->width);
   Expr* arrayElem = new Arithmetic(Word::Mult, elemExpr, widthE);
-
   ArrayAccess* aa = new ArrayAccess(id, arrayElem, id->type);
   return aa;
 }

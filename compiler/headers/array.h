@@ -6,7 +6,6 @@
 class Array : public Type{
 private:
   int numElem;
-  int width;
   Type* type;
 
 public:
@@ -22,6 +21,11 @@ public:
     ss << "Array: type is " << lexeme <<  " | Tag is " << tag << "."
         << " | Width is "<< getWidth();
     return ss.str();
+  }
+
+  inline std::string getName()
+  {
+    return lexeme;
   }
 
   void setNumElem(int num);

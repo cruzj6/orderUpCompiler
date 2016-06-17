@@ -1,12 +1,21 @@
+breakfastOrder outString(breakfastItem[20] @ str1, breakfastItem[30] @ str2)
+  {
+      serveOut("You Entered: ");
+      serveOut(str1);
+      serveOut(" and ");
+      serveOut(str2);
+
+      //No return type
+      orderUp;
+  }
+
 breakfastOrder main() orderOf wholeMilk
 {
   //Declarations and assignments
-  string1 @ breakfastItem[22];
-  string2 @ breakfastItem[15];
-  instString @ breakfastItem[50];
-  inst2String @ breakfastItem[25];
-
-  instString
+  breakfastItem[22] @ string1;
+  breakfastItem[15] @ string2;
+  breakfastItem[50] @ instString;
+  breakfastItem[25] @ inst2String;
 
   //Print to standard out
   serveOut(instString);
@@ -23,14 +32,3 @@ breakfastOrder main() orderOf wholeMilk
 
   orderUp 0;
 }
-
-breakfastOrder outString(str1 @ breakfastItems, str2 @ breakfastItems)
-  {
-      serveOut("You Entered: ");
-      serveOut(str1);
-      serveOut(" and ");
-      serveOut(str2);
-
-      //No return type
-      orderUp;
-  }

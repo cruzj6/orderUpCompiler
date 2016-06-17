@@ -49,6 +49,11 @@ public:
     return ss.str();
   }
 
+  inline std::string getName()
+  {
+    return lexeme;
+  }
+
   //Destructor
   virtual ~Word(){}
 };

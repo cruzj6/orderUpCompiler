@@ -18,11 +18,12 @@ breakfastOrder main() orderOf wholeMilk
   loopString <- "i is even or 0!\n";
   loopString[5] <- "2";
   //Loop structure
-  roll(i : 0 -> (loopCount - 1) stepBy 1)
+  roll (i : 0 -> (loopCount - 1) stepBy 1)
   {
     //fresh is conditional if
-    fresh(0 <==> (i * 2))
+    fresh((i % 2) <==> 0)
     {
+      i <- (i+3) * 2;
       //Print to standard out stream
       serveOut(loopString);
 
@@ -32,6 +33,12 @@ breakfastOrder main() orderOf wholeMilk
         serveOut("Breaking the Loop! We're done!\n");
         break;
       }
+    }
+    ?fresh(i  <=!=> 12)
+    {
+      breakfastItem[50] @ b;
+      b <- orderIn();
+      serveOut(b);
     }
     expired //Conditional Else
     {

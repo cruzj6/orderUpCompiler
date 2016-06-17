@@ -270,9 +270,10 @@ Token* Lexer::scan()
   /******************* End Numbers *******************/
 
   /******************* Words *******************/
-  if(isalpha(peek))
+  if(isalpha(peek) || peek == '?')
   {
     std::stringstream ss;
+    if(peek == '?') {ss << '?'; readNextCh();}
     while(isalpha(peek) || isdigit(peek))
     {
       ss << peek;

@@ -1,4 +1,5 @@
 #pragma once
+#include <sstream>
 class Real : public Token{
 public:
     float value;
@@ -11,6 +12,13 @@ public:
     {
       std::stringstream ss;
       ss << "REAL: value is " << value <<  " Tag is " << tag;
+      return ss.str();
+    }
+
+    std::string getName()
+    {
+      std::stringstream ss;
+      ss << value;
       return ss.str();
     }
 };

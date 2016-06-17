@@ -43,6 +43,21 @@ public:
     return ss.str();
   }
 
+  inline virtual std::string getName()
+  {
+    std::stringstream ss;
+    if(asciiValuesTag.size() > 0)
+    {
+      std::list<int>::iterator it;
+      for(it = asciiValuesTag.begin(); it != asciiValuesTag.end(); it++)
+      {
+        ss << static_cast<char>(*it);
+      }
+    }
+    else ss << static_cast<char>(tag);
+    return ss.str();
+  }
+
   virtual ~Token(){
 
   }

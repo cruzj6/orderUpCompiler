@@ -15,7 +15,7 @@ public:
   Token* scan();
 
   Lexer(){
-    curLine = 0;
+    curLine = 1;
     isEOF = false;
     buildDefaults();
   };

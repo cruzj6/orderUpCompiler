@@ -1,0 +1,50 @@
+//This is the third teest
+/*WOO
+
+;smaf;mkakfsfm
+
+*/
+
+breakfastOrder testFunc(breakfastItem @ a, wholeMilk @ b)
+{
+  wholeMilk @ i;
+  baconOrSausage @ bOrS;
+
+  bOrS <- bacon;
+
+  i <- 0;
+  roll(i: 0 -> (b * 3 + 4) stepBy 1)
+  {
+    fresh(i <==> 2)
+    {
+      fresh(b <==> 3)
+      {
+        break;
+      }
+    }
+    ?fresh(i <==>3)
+    {
+      breakfastItem[20] @ inString;
+      inString <- orderIn();
+    }
+    ?fresh(bOrS)
+    {
+      break;
+    }
+  }
+
+  orderUp;
+}
+
+breakfastOrder meow() orderOf breakfastItem[20]
+{
+  orderUp "MEOW";
+}
+
+breakfastOrder main() orderOf wholeMilk
+{
+  testFunc("n", ((3 - 2) * 5));
+  meow();
+
+  orderUp 0;
+}

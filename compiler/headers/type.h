@@ -23,4 +23,9 @@ public:
         << " | Width is "<< width;
     return ss.str();
   }
+
+  inline std::string getName()
+  {
+    return lexeme;
+  }
 };

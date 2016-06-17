@@ -1,0 +1,13 @@
+wholeMilk @ i;
+
+breakfastOrder main() orderOf wholeMilk
+{
+  roll(i: 0 -> 12 stepBy 1)
+  {
+    fresh(i <==> 10)
+    {
+      break;
+    }
+    expired serveOut(j);
+  }
+}

@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
   }
   catch(Error e)
   {
-    std::cerr << "ERROR: " << e.ShowReason() << std::endl;
+    std::cerr << "\033[1;31mERROR: \033[0m" << e.ShowReason() << std::endl;
     exit(-1);
   }
 }

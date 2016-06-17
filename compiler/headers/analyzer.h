@@ -3,6 +3,29 @@
 #include "lexer.h"
 #include "stmnt.h"
 #include "env.h"
+#include "arrayaccess.h"
+#include "seq.h"
+#include "functionid.h"
+#include "function.h"
+#include "roll.h"
+#include "fresh.h"
+#include "break.h"
+#include "return.h"
+#include "serveout.h"
+#include "assign.h"
+#include "functioncall.h"
+#include "functionstmnt.h"
+#include "assignelem.h"
+#include "qfresh.h"
+#include "expired.h"
+#include "orlogicexpr.h"
+#include "andlogicexpr.h"
+#include "logicrelexpr.h"
+#include "arithmetic.h"
+#include "unary.h"
+#include "not.h"
+#include "const.h"
+#include "orderin.h"
 #include <string>
 
 class Analyzer{
@@ -34,6 +57,7 @@ public:
   Expr* equality();
   Expr* equalityOp();
   Expr* mult();
+  Expr* mod();
   Expr* unary();
   Expr* factor();
   ArrayAccess* offset(Id* id);
