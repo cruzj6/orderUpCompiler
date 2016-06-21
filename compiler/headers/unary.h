@@ -8,5 +8,9 @@ public:
   {
     expr = e;
   }
+  ~Unary()
+  {
+    delete expr;
+  }
   void printNode();
 };

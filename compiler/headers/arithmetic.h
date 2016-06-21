@@ -8,6 +8,11 @@ public:
     op1 = e1;
     op2 = e2;
   }
+  ~Arithmetic()
+  {
+    delete op1;
+    delete op2;
+  }
   Expr* op1;
   Expr* op2;
   void printNode();

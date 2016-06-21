@@ -9,6 +9,11 @@ public:
     op = o;
     type = t;
   }
+  virtual ~Expr()
+  {
+    delete op;
+    delete type;
+  }
   Token* op;
   Type* type; //What this statement "returns"
   void printNode();

@@ -11,5 +11,10 @@ public:
     array = i;
     index = e;
   }
+  ~ArrayAccess()
+  {
+    delete array;
+    delete index;
+  }
   void printNode();
 };

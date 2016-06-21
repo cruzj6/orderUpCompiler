@@ -9,6 +9,12 @@ public:
     expr = val;
     index = a->index;
   }
+  ~AssignElem()
+  {
+    delete index;
+    delete expr;
+    delete array;
+  }
   void printNode();
 private:
   Expr* index;

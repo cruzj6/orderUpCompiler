@@ -10,7 +10,9 @@ public:
   {
     offset = off;
   }
-
+  ~Id()
+  {
+  }
   Token* getToken();
   Type* getType();
   int getOffset();

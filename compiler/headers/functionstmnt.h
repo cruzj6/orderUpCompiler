@@ -8,6 +8,9 @@ public:
   {
     funcCall = call;
   }
+  ~FunctionStmnt(){
+    delete funcCall;
+  }
   void printNode();
 private:
   Expr* funcCall;

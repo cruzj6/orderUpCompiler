@@ -39,6 +39,8 @@ void Analyzer::program()
   s->printNode();
   #endif
 
+  //Recursive tree cleanup
+  delete s;
 }
 
 void Analyzer::match(int toMatch)

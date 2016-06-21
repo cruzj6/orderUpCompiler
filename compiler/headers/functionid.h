@@ -8,5 +8,9 @@ public:
   {
     retType = ret;
   }
+  ~FunctionId()
+  {
+    delete retType;
+  }
   void printNode();
 };

@@ -7,6 +7,10 @@ public:
   {
     outExpr = out;
   }
+  ~ServeOut()
+  {
+    delete outExpr;
+  }
   void printNode();
 private:
   Expr* outExpr;

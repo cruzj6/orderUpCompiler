@@ -15,6 +15,11 @@ public:
     type = t;
   }
 
+  ~Array()
+  {
+    delete type;
+  }
+
   inline std::string getString()
   {
     std::stringstream ss;

@@ -8,6 +8,10 @@ public:
   {
     ret = retExpr;
   }
+  ~Return()
+  {
+    delete ret;
+  }
   Expr* ret;
   void printNode();
 };
