@@ -1,0 +1,25 @@
+breakfastOrder doStringStuff(breakfastItem[10] @ smallString) orderOf breakfastItem[5]
+{
+  wholeMilk @ count;
+  breakfastItem[5] @ items;
+  count <- 0;
+
+  //Loop through get every other
+  roll(count : 0 -> 10 stepBy 1)
+  {
+    fresh(count % 2 <==> 0)
+    {
+      items[count/2] <- smallString[count];
+    }
+  }
+
+  orderUp items;
+}
+
+breakfastOrder main() orderOf wholeMilk{
+
+  breakfastItem[10] @ test;
+  test[0] <- 2;
+  doStringStuff(test);
+  orderUp 0;
+}

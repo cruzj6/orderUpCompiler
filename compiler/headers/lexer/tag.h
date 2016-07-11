@@ -1,11 +1,6 @@
-// tag.h
-//
-
-#ifndef LZZ_tag_h
-#define LZZ_tag_h
-#define LZZ_INLINE inline
-enum Tag
-{
+#pragma once
+enum Tag{
+  //Operators
   ASSIGN = 256,
   ASSIGNTYPE,
   PLUS,
@@ -20,10 +15,14 @@ enum Tag
   MULT,
   MOD,
   LINEEND,
+
+  //Loop Tags
   FOR,
   ASEP,
   FLOW,
   STEP,
+
+  //Conditional and bool
   AND,
   OR,
   IF,
@@ -31,6 +30,8 @@ enum Tag
   ELSEIF,
   TRU,
   FALS,
+
+  //other
   BREAK,
   NUM,
   FLOATING,
@@ -51,5 +52,3 @@ enum Tag
   IN,
   INDEX
 };
-#undef LZZ_INLINE
-#endif

@@ -25,7 +25,7 @@ breakfastOrder testFunc(breakfastItem @ a, wholeMilk @ b)
     ?fresh(i <==>3)
     {
       breakfastItem[20] @ inString;
-      inString <- orderIn();
+      inString <- orderIn(20);
     }
     ?fresh(bOrS)
     {
@@ -43,7 +43,7 @@ breakfastOrder meow() orderOf breakfastItem[20]
 
 breakfastOrder main() orderOf wholeMilk
 {
-  testFunc("n", ((3 - 2) * 5));
+  testFunc('n', ((3 - 2) * 5));
   meow();
 
   orderUp 0;
