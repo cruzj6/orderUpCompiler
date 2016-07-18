@@ -2,7 +2,7 @@
 void QFresh::printNode()
 {
   printTabs();
-  std::cout << "========QFresh Node========" << std::endl;
+  std::cerr << "========QFresh Node========" << std::endl;
   Stmnt::printNode();
   tabs++;
   if(booleanExpr != NULL) {booleanExpr->printNode();}

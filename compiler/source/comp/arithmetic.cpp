@@ -15,7 +15,7 @@ Arithmetic::~Arithmetic()
 void Arithmetic::printNode()
 {
   printTabs();
-  std::cout << "========Arithmetic Node========" << std::endl;
+  std::cerr << "========Arithmetic Node========" << std::endl;
   Expr::printNode();
   tabs++;
   if(op1 != NULL) {
@@ -28,9 +28,22 @@ void Arithmetic::printNode()
   printEndNode();
 }
 
+// constructs RHS of three-address instruction
+// by reducing operands to addresses
+Expr* Arithmetic::gen()
+{
+  return new Arithmetic(op, op1->reduce(), op2->reduce());
+}
+
+std::string Arithmetic::toString()
+{
+  std::stringstream ss;
+  ss << op1->toString() << " " << op->toString() << " " << op2->toString();
+}
+
 Type* Arithmetic::checkType(Expr* e1, Expr* e2)
 {
-  std::cout << e1->type->getString() << e2->type->getString() << std::endl;
+  std::cerr << e1->type->getString() << e2->type->getString() << std::endl;
   if(!Type::isNumericType(e1->type) || !Type::isNumericType(e2->type))
   {
     Error* e = new Error();

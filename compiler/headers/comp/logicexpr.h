@@ -3,17 +3,11 @@
 
 class LogicExpr : public Expr{
 public:
-  LogicExpr(Token* o, Expr* e1, Expr* e2) : Expr(o, Type::boolean)
-  {
-    op1 = e1;
-    op2 = e2;
-  }
-  ~LogicExpr()
-  {
-    delete op1;
-    delete op2;
-  }
+  LogicExpr(Token* o, Expr* e1, Expr* e2);
+  ~LogicExpr();
+  Expr* gen();
   void printNode();
+  std::string toString();
   Expr* op1;
   Expr* op2;
 };

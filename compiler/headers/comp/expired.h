@@ -3,14 +3,10 @@
 
 class Expired : public Stmnt{
 public:
-  Expired(Stmnt* st)
-  {
-    blockStmnt = st;
-  }
+  Expired(Stmnt* st);
+  ~Expired();
   void printNode();
-  ~Expired(){
-    delete blockStmnt;
-  }
+  void gen(int b, int a);
 private:
   Stmnt*  blockStmnt;
 };

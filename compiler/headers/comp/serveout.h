@@ -3,15 +3,10 @@
 #include "comp/expr.h"
 class ServeOut : public Stmnt{
 public:
-  ServeOut(Expr* out)
-  {
-    outExpr = out;
-  }
-  ~ServeOut()
-  {
-    delete outExpr;
-  }
+  ServeOut(Expr* out);
+  ~ServeOut();
   void printNode();
+  void gen(int b, int a);
 private:
   Expr* outExpr;
 };

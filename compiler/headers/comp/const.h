@@ -5,11 +5,10 @@
 
 class Const : public Expr{
 public:
-  Const(Token* o, Type* t) : Expr(o, t){}
-  Const(int i) : Expr(new Number(i), Type::integer){}
-  ~Const(){
-
-  }
+  Const(Token* o, Type* t);
+  Const(int i);
+  ~Const();
+  void jumping(int t, int f);
   void printNode();
   static Const* trueConst;
   static Const* falseConst;

@@ -4,13 +4,9 @@
 class Unary : public Op{
 public:
   Expr* expr;
-  Unary(Token* o, Expr* e) : Op(o, e->type)
-  {
-    expr = e;
-  }
-  ~Unary()
-  {
-    delete expr;
-  }
+  Unary(Token* o, Expr* e);
+  ~Unary();
+  Expr* gen();
   void printNode();
+  std::string toString();
 };

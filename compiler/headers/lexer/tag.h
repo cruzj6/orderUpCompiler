@@ -50,5 +50,6 @@ enum Tag{
   ENDOFFILE,
   OUT,
   IN,
-  INDEX
+  INDEX,
+  TEMP
 };

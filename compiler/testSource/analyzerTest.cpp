@@ -1,13 +1,15 @@
 #include <iostream>
 #include "comp/error.h"
+#include "lexer/lexer.h"
 #include "comp/analyzer.h"
 
 int main(int argc, char* argv[])
 {
+  Lexer* lex = new Lexer();
   Analyzer* a = new Analyzer();
   a->setInfilePath(argv[1]);
   try{
-    a->program();
+    a->program(lex);
   }
   catch(Error e)
   {

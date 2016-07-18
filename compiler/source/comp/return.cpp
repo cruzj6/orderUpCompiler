@@ -25,8 +25,8 @@ Return::Return(Expr* retExpr)
   }
   else if(retExpr != NULL && funcRetType != retExpr->type->getDataType())
   {
-    std::cout << funcRetType->getString()<< std::endl;
-    std::cout << retExpr->type->getDataType()->getString() << std::endl;
+    std::cerr << funcRetType->getString()<< std::endl;
+    std::cerr << retExpr->type->getDataType()->getString() << std::endl;
     Error* e = new Error();
     e->msg = "Return Expression type does not match function return type";
     throw *e;
@@ -42,7 +42,7 @@ Return::~Return()
 void Return::printNode()
 {
   printTabs();
-  std::cout << "========Return Node========" << std::endl;
+  std::cerr << "========Return Node========" << std::endl;
   Stmnt::printNode();
   tabs++;
   if(ret != NULL) ret->printNode();

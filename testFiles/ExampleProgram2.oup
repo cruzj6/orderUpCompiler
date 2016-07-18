@@ -25,12 +25,12 @@ breakfastOrder main() orderOf wholeMilk
     {
       i <- (i+3) * 2;
       //Print to standard out stream
-      serveOut(loopString);
+      //serveOut(loopString);
 
       //If i is 6 break it
       fresh(i <==> 6)
       {
-        serveOut("Breaking the Loop! We're done!\n");
+        //serveOut("Breaking the Loop! We're done!\n");
         break;
       }
     }
@@ -38,11 +38,11 @@ breakfastOrder main() orderOf wholeMilk
     {
       breakfastItem[50] @ b;
       b <- orderIn(5);
-      serveOut(b);
+      //serveOut(b);
     }
     expired //Conditional Else
     {
-      serveOut("i is Odd!\n");
+      //serveOut("i is Odd!\n");
     }
   }
 

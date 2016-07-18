@@ -3,9 +3,9 @@
 void Id::printNode()
 {
   printTabs();
-  std::cout << "========Id Node========" << std::endl;
+  std::cerr << "========Id Node========" << std::endl;
   printTabsClean();
-  std::cout << "Offset: " << offset << std::endl;
+  std::cerr << "Offset: " << offset << std::endl;
   Expr::printNode();
   printEndNode();
 }

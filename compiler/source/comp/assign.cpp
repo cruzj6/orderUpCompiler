@@ -34,6 +34,12 @@ Assign::Assign(Id* i, Expr* val)
   }
 }
 
+void Assign::gen(int b, int a)
+{
+  std::cerr << "ASSIGN GEN" << std::endl;
+  emit(id->toString() + " = " + expr->gen()->toString());
+}
+
 Assign::~Assign(){
   delete expr;
   delete id;
@@ -42,7 +48,7 @@ Assign::~Assign(){
 void Assign::printNode()
 {
   printTabs();
-  std::cout << "========Assign Node========" << std::endl;
+  std::cerr << "========Assign Node========" << std::endl;
   Stmnt::printNode();
   tabs++;
   if(expr != NULL) expr->printNode();

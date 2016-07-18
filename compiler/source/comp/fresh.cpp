@@ -13,6 +13,14 @@ Fresh::Fresh(Expr* cond, Stmnt* st,  Stmnt* el)
   }
 }
 
+void Fresh::gen(int b, int a)
+{
+  int label = newLabel();
+  booleanExpr->jumping(0, a);//True fall to stmnt, else go to label a
+  emitLabel(label);
+  stmnt->gen(label, a);
+}
+
 Fresh::~Fresh()
 {
   delete booleanExpr;
@@ -22,7 +30,7 @@ Fresh::~Fresh()
 void Fresh::printNode()
 {
   printTabs();
-  std::cout << "========Fresh Node========" << std::endl;
+  std::cerr << "========Fresh Node========" << std::endl;
   Stmnt::printNode();
   tabs++;
   if(booleanExpr != NULL) booleanExpr->printNode();

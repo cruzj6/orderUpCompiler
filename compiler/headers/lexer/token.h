@@ -14,5 +14,6 @@ public:
   Token(std::string t);  //For unknown tokens
   virtual std::string getName();
   virtual std::string getString();
+  virtual std::string toString();
   virtual ~Token(){}
 };

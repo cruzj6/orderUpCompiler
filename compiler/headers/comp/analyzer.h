@@ -26,6 +26,7 @@
 #include "comp/const.h"
 #include "comp/orderin.h"
 #include <string>
+#include <fstream>
 
 class Analyzer{
 public:
@@ -33,7 +34,7 @@ public:
   {
 
   }
-  void program();
+  void program(Lexer* lex);
   void match(int toMatch);
   void move();
   void setInfilePath(std::string p);

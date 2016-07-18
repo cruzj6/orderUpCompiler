@@ -8,4 +8,5 @@ public:
     Real(float num);
     std::string getString();
     std::string getName();
+    std::string toString();
 };

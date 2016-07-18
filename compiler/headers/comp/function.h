@@ -5,22 +5,13 @@
 
 class Function : public Stmnt{
 public:
-  Function(std::vector<Id*> ps, Stmnt* blck, Type* rType){
-    params = ps;
-    funcBlock = blck;
-    retType = rType;
-  }
+  Function(Id* fId, std::vector<Id*> ps, Stmnt* blck, Type* rType);
+  ~Function();
   void printNode();
-  ~Function(){
-    std::vector<Id*>::iterator it;
-    for(it = params.begin(); it != params.end(); it++)
-    {
-      delete *it;
-    }
-    delete funcBlock;
-  }
+  void gen(int b, int a);
 private:
   std::vector<Id*> params;
   Stmnt* funcBlock;
   Type* retType;
+  Id* funcId;
 };

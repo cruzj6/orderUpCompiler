@@ -10,6 +10,7 @@ public:
   ~Assign();
   void printNode();
   Type* checkType(Type* t1, Type* t2);
+  void gen(int b, int a);
 private:
   Expr* expr; //Must be same type as Id
   Id* id;

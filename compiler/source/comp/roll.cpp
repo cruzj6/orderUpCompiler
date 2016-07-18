@@ -36,7 +36,7 @@ Roll::~Roll()
 void Roll::printNode()
 {
   printTabs();
-  std::cout << "========Roll Node========" << std::endl;
+  std::cerr << "========Roll Node========" << std::endl;
   Stmnt::printNode();
   tabs++;
   if(counter != NULL) counter->printNode();

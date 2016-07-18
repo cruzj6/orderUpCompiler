@@ -2,6 +2,6 @@
 void Break::printNode()
 {
   printTabs();
-  std::cout << "========Break Node========" << std::endl;
+  std::cerr << "========Break Node========" << std::endl;
   Stmnt::printNode();
 }

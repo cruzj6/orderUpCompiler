@@ -93,7 +93,7 @@ void Lexer::printMap()
 {
   std::map<std::string, Token*>::iterator it;
   for(it = words.begin(); it != words.end(); it++){
-    std::cout << it->second->getString() << std::endl;
+    std::cerr << it->second->getString() << std::endl;
   }
 }
 
@@ -102,7 +102,7 @@ void Lexer::readNextCh()
 {
   peek = inFile.get();
   if(inFile.eof()) isEOF = true;
-  //std::cout << "Next Char: " << peek << std::endl;
+  //std::cerr << "Next Char: " << peek << std::endl;
 }
 
 bool Lexer::readNextChCheck(char c)
@@ -282,7 +282,7 @@ Token* Lexer::scan()
       return new Real(num);
     }
     else{
-      return new Number(stoi(ss.str()));
+      return new Number(atoi(ss.str().c_str()));
     }
   }
   /******************* End Numbers *******************/

@@ -36,9 +36,12 @@ public:
   static Word* ASep;
   static Word* FlowOp;
 
+  static Word* temp;
+
   Word(std::string l, int t);
   std::string getString();
   std::string getName();
+  std::string toString();
 
   //Destructor
   virtual ~Word(){}

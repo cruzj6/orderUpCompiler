@@ -5,7 +5,7 @@
 void Env::addSymbol(Token* tok, Id* id)
 {
   #ifdef DEBUG
-  std::cout << "ADDING SYMBOL: " << tok->getString() << std::endl;
+  std::cerr << "ADDING SYMBOL: " << tok->getString() << std::endl;
   #endif
 
   if(symbolTableMap.find(tok) == symbolTableMap.end())
@@ -20,7 +20,7 @@ void printSymTableIds()
 Id* Env::getIdForToken(Token* tok)
 {
   #ifdef DEBUG
-  std::cout << "GETTING ID FOR TOKEN: " << tok->getString() << std::endl;
+  std::cerr << "GETTING ID FOR TOKEN: " << tok->getString() << std::endl;
   #endif
 
   Env* curEnv = this;
@@ -30,8 +30,8 @@ Id* Env::getIdForToken(Token* tok)
     if(it != curEnv->symbolTableMap.end())
     {
       #ifdef DEBUG
-      std::cout << "FOUND!"<< std::endl;
-      std::cout << it->second->type->getString() << std::endl;
+      std::cerr << "FOUND!"<< std::endl;
+      std::cerr << it->second->type->getString() << std::endl;
       #endif
 
       return it->second;
@@ -40,7 +40,7 @@ Id* Env::getIdForToken(Token* tok)
   }while(curEnv != NULL);
 
   #ifdef DEBUG
-  std::cout << "NOT FOUND!"<< std::endl;
+  std::cerr << "NOT FOUND!"<< std::endl;
   #endif
 
   return NULL;

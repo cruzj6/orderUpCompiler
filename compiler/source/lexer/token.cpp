@@ -35,6 +35,13 @@ std::string Token::getString()
   return ss.str();
 }
 
+std::string Token::toString()
+{
+  std::stringstream ss;
+  ss << (char)tag;
+  return  ss.str();
+}
+
 std::string Token::getName()
 {
   std::stringstream ss;

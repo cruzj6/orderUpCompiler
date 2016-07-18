@@ -4,6 +4,11 @@
 #include <iostream>
 
 Stmnt* Stmnt::Enclosing = NULL;
+Stmnt* Stmnt::Null = new Stmnt();
+
+void Stmnt::gen(int b, int a){
+
+}
 
 void Stmnt::printNode()
 {

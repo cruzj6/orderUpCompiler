@@ -5,7 +5,7 @@
 void FunctionCall::printNode()
 {
   printTabs();
-  std::cout << "========FunctionCall Node========" << std::endl;
+  std::cerr << "========FunctionCall Node========" << std::endl;
   Expr::printNode();
   tabs++;
   std::vector<Expr*>::iterator it;

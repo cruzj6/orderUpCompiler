@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
 {
   if(argc <= 1)
   {
-    cout << "Please provide input file" << endl;
+    cerr << "Please provide input file" << endl;
     exit(0);
   }
 
@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
   lexer->begin(argv[1]);
   while(!lexer->getIsEOF())
   {
-    cout << lexer->scan()->getString() << endl;
+    cerr << lexer->scan()->getString() << endl;
   }
 
   delete lexer;

@@ -14,7 +14,5 @@ public:
   void emit(std::string codeString);
   void emitLabel(int i);
   int newLabel();
-  void emitFunctionLabel(std::string f);
-  void emitFunctionEnd();
   virtual ~Node(){};
 };

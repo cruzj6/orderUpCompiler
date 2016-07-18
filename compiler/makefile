@@ -1,5 +1,6 @@
 #Definitions
 CC = g++
+MAIN_DIR = ./source/main
 INC_DIR = headers
 SRC_DIR = ./source
 LEX_DIR = ./source/lexer
@@ -37,6 +38,10 @@ clean:
 	rm -f $(OBJS)
 	rm -f $(OBJ_DIR)/lexerTest.o
 	rm -f lexerTest
+	rm -f $(OBJ_DIR)/analyzerTest.o
+	rm -f analyzerTest
+	rm -f $(OBJ_DIR)/main.o
+	rm -f main
 
 ######################################
 #	Executable for testing the lexer   #
@@ -52,3 +57,9 @@ analyzerTest: $(OBJ_DIR)/analyzerTest.o $(OBJS)
 
 $(OBJ_DIR)/analyzerTest.o: $(TST_DIR)/analyzerTest.cpp
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $(TST_DIR)/analyzerTest.cpp -o $@
+
+main: $(OBJ_DIR)/main.o $(OBJS)
+	$(CC) $(CPPFLAGS) -o main $(OBJS)
+
+$(OBJ_DIR)/main.o: $(MAIN_DIR)/main.cpp
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $(MAIN_DIR)/main.cpp -o $@

@@ -24,10 +24,10 @@ void Analyzer::throwError(std::string msg)
   throw *e;
 }
 
-void Analyzer::program()
+void Analyzer::program(Lexer* lex)
 {
   used = 0;
-  lexer = new Lexer();
+  lexer = lex;
   lexer->begin(curInFilePath);
   top = new Env(NULL);
   move();
@@ -35,6 +35,11 @@ void Analyzer::program()
   Stmnt* s;
   try{
     s = functions(); //Get the syntax/parse tree
+    int bLabel = s->newLabel();
+    int eLabel = s->newLabel();
+    s->emitLabel(bLabel);
+    s->gen(bLabel, eLabel);
+    s->emitLabel(eLabel);
   }
   catch(Error e)
   {
@@ -53,7 +58,7 @@ void Analyzer::match(int toMatch)
 {
   #ifdef DEBUG
   Token* saveToken = curToken;
-  std::cout << "=============Match===========" << std::endl;
+  std::cerr << "=============Match===========" << std::endl;
   #endif
 
   if(curToken->tag == -1)
@@ -61,15 +66,15 @@ void Analyzer::match(int toMatch)
     std::stringstream ss;
     ss << "Unknown token: " << curToken->unknownToken << "\n";
     #ifdef DEBUG
-    std::cout << saveToken->getString() << std::endl;
+    std::cerr << saveToken->getString() << std::endl;
     #endif
     throwError(ss.str());
   }
   else if(curToken->tag == toMatch)
   {
     #ifdef DEBUG
-    std::cout << "Good" << std::endl;
-    std::cout << saveToken->getString() << std::endl;
+    std::cerr << "Good" << std::endl;
+    std::cerr << saveToken->getString() << std::endl;
     #endif
 
     move();
@@ -77,7 +82,7 @@ void Analyzer::match(int toMatch)
   else
   {
     #ifdef DEBUG
-    std::cout << saveToken->getString() << std::endl;
+    std::cerr << saveToken->getString() << std::endl;
     #endif
 
     std::stringstream ss;
@@ -85,7 +90,7 @@ void Analyzer::match(int toMatch)
     throwError(ss.str());
   }
   #ifdef DEBUG
-  std::cout << "=============================" << std::endl;
+  std::cerr << "=============================" << std::endl;
   #endif
 }
 
@@ -94,7 +99,7 @@ void Analyzer::move()
   Token* t = lexer->scan();
   if(t->unknownToken != "")
   {
-    std::cout << "Unknown Token" << t->unknownToken << std::endl;
+    std::cerr << "Unknown Token" << t->unknownToken << std::endl;
   }
   curToken = t;
 }
@@ -173,7 +178,7 @@ Stmnt* Analyzer::function(){
   match(BLOCKSTART);// {
   declarations();
   Stmnt* funcBlock = stmnts(); //List of our statements
-  Function* f = new Function(params, funcBlock, t);
+  Function* f = new Function(saveTop->getIdForToken(funcTok), params, funcBlock, t);
   match(BLOCKEND);// }
 
   top = saveTop;
@@ -229,8 +234,8 @@ Stmnt* Analyzer::stmnt(){
       if(w != NULL)
       {
         std::string l = w->lexeme;
-        std::cout << "ERROR: identifier " << l
-        << " never declared!";
+        std::cerr << "ERROR: identifier " << l
+        << " never declared!" << std::endl;
       }
     }
     Roll* loop = new Roll();
@@ -631,7 +636,7 @@ void Analyzer::declaration(){
   used = used + t->width;
 
   #ifdef DEBUG
-  std::cout << "Added: " << idTok->getString() << std::endl;
+  std::cerr << "Added: " << idTok->getString() << std::endl;
   #endif
 }
 
@@ -663,7 +668,7 @@ Type* Analyzer::type(){
 ArrayAccess* Analyzer::offset(Id* id)
 {
   #ifdef DEBUG
-  std::cout << "ACCESSING ARRAY" << std::endl;
+  std::cerr << "ACCESSING ARRAY" << std::endl;
   #endif
 
   Expr* elemExpr;

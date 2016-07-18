@@ -9,6 +9,8 @@ public:
   Expr* op1;
   Expr* op2;
   void printNode();
+  Expr* gen();
+  std::string toString();
 private:
   Type* checkType(Expr* e1, Expr* e2);
 };

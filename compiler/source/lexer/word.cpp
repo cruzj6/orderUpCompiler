@@ -30,6 +30,7 @@ Word* Word::Mod = new Word("%", MOD);
 //Loop Operators
 Word* Word::ASep = new Word(":", ASEP);
 Word* Word::FlowOp = new Word("->", FLOW);
+Word* Word::temp = new Word("t", TEMP);
 
 Word::Word(std::string l, int t) : Token(t)
 {
@@ -43,6 +44,11 @@ std::string Word::getString()
   str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
   ss << "WORD: lexeme is " << str <<  " | Tag is " << tag;
   return ss.str();
+}
+
+std::string Word::toString()
+{
+  return lexeme;
 }
 
 std::string Word::getName()

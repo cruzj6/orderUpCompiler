@@ -6,15 +6,9 @@ class ArrayAccess : public Op{
 public:
   Id* array;
   Expr* index;
-  ArrayAccess(Id* i, Expr* e, Type* t) : Op(new Word("[]", INDEX), t)
-  {
-    array = i;
-    index = e;
-  }
-  ~ArrayAccess()
-  {
-    delete array;
-    delete index;
-  }
+  ArrayAccess(Id* i, Expr* e, Type* t);
+  ~ArrayAccess();
+  Expr* gen();
+  void jumping(int t, int f);
   void printNode();
 };

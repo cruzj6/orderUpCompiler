@@ -18,3 +18,10 @@ std::string Real::getName()
   ss << value;
   return ss.str();
 }
+
+std::string Real::toString()
+{
+  std::stringstream ss;
+  ss << value;
+  return ss.str();
+}

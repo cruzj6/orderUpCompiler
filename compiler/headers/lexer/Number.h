@@ -7,4 +7,5 @@ public:
   Number(int num);
   std::string getString();
   std::string getName();
+  std::string toString();
 };
