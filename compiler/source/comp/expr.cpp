@@ -32,7 +32,7 @@ void Expr::emitJumps(std::string test, int t, int f)
 {
   std::stringstream emitStream;
   if (t != 0 &&  f != 0) {
-    emitStream << "if" << test << "goto L" << t;
+    emitStream << "if " << test << " goto L" << t;
 	  emit(emitStream.str());
 
     emitStream.str("");
@@ -41,12 +41,12 @@ void Expr::emitJumps(std::string test, int t, int f)
   }
   else if (t != 0 ) {
     emitStream.str("");
-    emitStream << "if " << test << "goto L" << t;
+    emitStream << "if " << test << " goto L" << t;
     emit(emitStream.str());
   }
   else if (f != 0 ) {
     emitStream.str("");
-    emitStream << "iffalse" << test << " goto L" << f;
+    emitStream << "iffalse " << test << " goto L" << f;
     emit(emitStream.str());
   }
   else ; // Nothing since both t and f fall through
@@ -54,6 +54,7 @@ void Expr::emitJumps(std::string test, int t, int f)
 
 std::string Expr::toString()
 {
+  if(op == NULL) return "";
   std::cerr << "GET EXPR STRING: " << op->toString() << std::endl;
   return op->toString();
 }

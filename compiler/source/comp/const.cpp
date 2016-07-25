@@ -22,6 +22,21 @@ void Const::jumping(int t, int f)
   }
 }
 
+std::string Const::toString()
+{
+  if(type->getDataType() == Type::ch)
+  {
+    std::stringstream ss;
+    //Quotes around STLIT or char literal
+    if(op->tag == STLIT)
+      ss << "\"" << Expr::toString() << "\"";
+    else
+      ss << "\'" << Expr::toString() << "\'";
+    return ss.str();
+  }
+  else return Expr::toString();
+}
+
 void Const::printNode()
 {
   printTabs();

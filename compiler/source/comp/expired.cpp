@@ -11,21 +11,11 @@ Expired::~Expired(){
 
 void Expired::gen(int b, int a)
 {
-  /*int label1 = newLabel();      // stmt1 label
-  int label2 = newLabel();      // stmt2 label
-  expr.jumping(0, label2);       // true : fall thru to stmt1
+  int label1 = newLabel();      // stmt1 label
 
-  // label & code for true
+  // label & code for the statement
   emitLabel(label1);
-  stmt1->gen(label1, a);
-
-  std::stringstream ss;
-  ss << "goto L" << a;
-  emit(ss.str());	    // skip false
-
-  // label & code for false
-  emitLabel(label2);
-  stmt2->gen(label2,a);*/
+  if (blockStmnt != NULL) blockStmnt->gen(label1, a);
 }
 
 void Expired::printNode()

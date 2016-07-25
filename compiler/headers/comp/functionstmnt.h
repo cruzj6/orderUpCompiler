@@ -4,14 +4,10 @@
 
 class FunctionStmnt : public Stmnt{
 public:
-  FunctionStmnt(Expr* call)
-  {
-    funcCall = call;
-  }
-  ~FunctionStmnt(){
-    delete funcCall;
-  }
+  FunctionStmnt(Expr* call);
+  ~FunctionStmnt();
   void printNode();
+  void gen(int b, int a);
 private:
   Expr* funcCall;
 };

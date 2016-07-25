@@ -17,4 +17,5 @@ public:
 
   void setNumElem(int num);
   int getWidth();
+  std::string toString();
 };

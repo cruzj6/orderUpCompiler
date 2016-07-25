@@ -521,7 +521,7 @@ Expr* Analyzer::factor()
     case TRU:
       if (Const::trueConst->type == NULL)
       {
-        Const::trueConst->type = Type::boolean;
+        Const::trueConst = new Const(Word::BTrue, Type::boolean);
       }
       n = Const::trueConst;
       move();
@@ -530,7 +530,7 @@ Expr* Analyzer::factor()
     case FALS:
       if (Const::trueConst->type == NULL)
       {
-        Const::trueConst->type = Type::boolean;
+        Const::trueConst = new Const(Word::BFalse, Type::boolean);
       }
       n = Const::falseConst;
       move();

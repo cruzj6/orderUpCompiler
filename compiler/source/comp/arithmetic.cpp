@@ -2,7 +2,7 @@
 #include "comp/error.h"
 
 
-Arithmetic::Arithmetic(Token* o, Expr* e1, Expr* e2) : Expr(o, checkType(e1, e2)){
+Arithmetic::Arithmetic(Token* o, Expr* e1, Expr* e2) : Op(o, checkType(e1, e2)){
   op1 = e1;
   op2 = e2;
 }
@@ -37,8 +37,15 @@ Expr* Arithmetic::gen()
 
 std::string Arithmetic::toString()
 {
+  std::cerr << "\nARITH NODE TO STRING" << std::endl;
   std::stringstream ss;
-  ss << op1->toString() << " " << op->toString() << " " << op2->toString();
+  ss << op1->toString();
+  std::cerr << ss.str() << std::endl;
+  ss << " " << op->toString();
+  std::cerr << ss.str()<< std::endl;
+  ss << " " << op2->toString();
+  std::cerr << ss.str()<< std::endl;
+  return ss.str();
 }
 
 Type* Arithmetic::checkType(Expr* e1, Expr* e2)

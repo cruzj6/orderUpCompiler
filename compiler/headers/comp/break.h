@@ -3,13 +3,8 @@
 
 class Break : public Stmnt{
 public:
-  Break(){
-    if(Stmnt::Enclosing == NULL)
-    {
-      Error* e = new Error();
-      e->msg = "Break is not enclosed!";
-      throw *e;
-    }
-  }
+  Break();
   void printNode();
+  void gen(int b, int a);
+  Stmnt* stmnt;
 };

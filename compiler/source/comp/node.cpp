@@ -52,10 +52,10 @@ void Node::emitLabel(int i)
 
 void Node::emitFunctionLabel(std::string f)
 {
-  std::cout << f << ":" << std::endl;
+  std::cout << "FUNC " << f << ":" << std::endl;
 }
 
 void Node::emitFunctionEnd()
 {
-  std::cout << "END" << std::endl;
+  std::cout << "END FUNC" << std::endl;
 }

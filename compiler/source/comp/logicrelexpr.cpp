@@ -1,4 +1,8 @@
 #include "comp/logicrelexpr.h"
+
+LogicRelExpr::LogicRelExpr(Token* o, Expr* e1, Expr* e2) : LogicExpr(o, e1, e2)
+{}
+
 void LogicRelExpr::printNode()
 {
   printTabs();
@@ -9,17 +13,9 @@ void LogicRelExpr::printNode()
 
 void LogicRelExpr::jumping(int t, int f)
 {
-  // Reduce expression 1 to an address (temporary, constant or identifier)
-  // Example:   With a + b < d  then a + b ==> t1
   Expr* a = op1->reduce();
-
-  // Reduce expression 2 to an address (temporary, constant or identifier)
   Expr* b = op2->reduce();
-
-  // Code for the relational expression with op1 and op2 reducded to
-  // addresses.
-  std::string test = a->toString() + " " + op->toString() + " " + b->toString();
-
-  // Generate code to perform jumps based on the test (see class Expr)
+  std::string test = a->toString() + " " + op->toString() + " " +
+    (b->toString() == "" ? Word::BTrue->toString() : b->toString());
   emitJumps(test, t, f);
 }

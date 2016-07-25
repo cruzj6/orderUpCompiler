@@ -12,4 +12,5 @@ public:
   void printNode();
   static Const* trueConst;
   static Const* falseConst;
+  std::string toString();
 };

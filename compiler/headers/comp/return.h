@@ -11,4 +11,5 @@ public:
   Expr* ret;
   void printNode();
   static Id* curFuncBlock;
+  void gen(int b, int a);
 };

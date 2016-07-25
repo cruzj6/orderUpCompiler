@@ -14,4 +14,5 @@ private:
   Expr* endNum; //Must be  wholeMilk/integer type
   Expr* stepBy; //Must be  wholeMilk/integer type
   Stmnt* stmnt;
+  void gen(int b, int a);
 };

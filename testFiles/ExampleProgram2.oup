@@ -33,6 +33,8 @@ breakfastOrder main() orderOf wholeMilk
         //serveOut("Breaking the Loop! We're done!\n");
         break;
       }
+
+      i <- 4;
     }
     ?fresh(i  <=!=> 12)
     {
@@ -44,6 +46,9 @@ breakfastOrder main() orderOf wholeMilk
     {
       //serveOut("i is Odd!\n");
     }
+
+    wholeMilk @ testNum;
+    testNum <- 12;
   }
 
   //orderUp returns

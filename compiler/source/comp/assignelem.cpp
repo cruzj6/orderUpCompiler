@@ -21,7 +21,7 @@ void AssignElem::gen(int b, int a)
   std::string s2 = expr->reduce()->toString();
 
   std::stringstream arrayString;
-  arrayString << array->toString() << " [ " << s1 ;//<< " ] = " << s2;
+  arrayString << array->toString() << " [ " << s1 << " ] = " << s2;
   // Print code for array element access. Example: a[t2] = t3
   emit(arrayString.str());
 }

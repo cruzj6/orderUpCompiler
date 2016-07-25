@@ -1,4 +1,5 @@
 #include "lexer/token.h"
+#include <iostream>
 
 Token::Token(int t)
 {

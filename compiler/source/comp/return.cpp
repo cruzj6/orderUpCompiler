@@ -39,6 +39,17 @@ Return::~Return()
   delete ret;
 }
 
+void Return::gen(int b, int a)
+{
+  std::cerr << "RETURN GEN" << std::endl;
+  if(ret != NULL){
+    std::stringstream ss;
+    ss << "return " << ret->toString();
+    emit(ss.str());
+  }
+  else emit("return");
+}
+
 void Return::printNode()
 {
   printTabs();

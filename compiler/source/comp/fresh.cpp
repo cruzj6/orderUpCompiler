@@ -15,10 +15,29 @@ Fresh::Fresh(Expr* cond, Stmnt* st,  Stmnt* el)
 
 void Fresh::gen(int b, int a)
 {
-  int label = newLabel();
-  booleanExpr->jumping(0, a);//True fall to stmnt, else go to label a
-  emitLabel(label);
-  stmnt->gen(label, a);
+  if(elseStmnt != NULL)
+  {
+    std::stringstream ss;
+    int label = newLabel();
+    int labelElse = newLabel();
+    booleanExpr->jumping(0, labelElse);//True fall to stmnt, else go to label else
+    emitLabel(label);
+    if (stmnt != NULL)stmnt->gen(label, a);
+
+    //Skip the else we got a true
+    ss << "goto L" << a;
+    emit(ss.str());
+
+    //Emit label for else stmnt
+    emitLabel(labelElse);
+    elseStmnt->gen(label, a);
+  }
+  else {
+    int label = newLabel();
+    booleanExpr->jumping(0, a);//True fall to stmnt, else go to label a
+    emitLabel(label);
+    if (stmnt != NULL) stmnt->gen(label, a);
+  }
 }
 
 Fresh::~Fresh()

@@ -1,5 +1,6 @@
 #include "symbols/array.h"
 #include "symbols/type.h"
+#include <iostream>
 
 Array::Array(Type* t, int num) : Type(t->lexeme, t->tag, num * t->width)
 {
@@ -33,6 +34,18 @@ std::string Array::getString()
 std::string Array::getName()
 {
   return lexeme;
+}
+
+std::string Array::toString()
+{
+  std::cerr << "ARRAY TO STRING" << std::endl;
+  if(getDataType() == Type::ch)
+  {
+    std::stringstream ss;
+    ss << "\"" << lexeme << "\"";
+    return ss.str();
+  }
+  else Word::toString();
 }
 
 Type* Array::getDataType()

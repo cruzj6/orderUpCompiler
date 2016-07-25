@@ -6,24 +6,14 @@
 class FunctionCall : public Expr{
 public:
 
-  FunctionCall(Token* tok, Type* t, std::vector<Expr*> exps, Id* funcCalled) : Expr(tok, t)
-  {
-    params = exps;
-    func = funcCalled;
-    checkTypes(exps);
-  }
-
-  ~FunctionCall(){
-    std::vector<Expr*>::iterator it;
-    for(it = params.begin(); it != params.end(); it++)
-    {
-      delete *it;
-    }
-  }
-
+  FunctionCall(Token* tok, Type* t, std::vector<Expr*> exps, Id* funcCalled);
+  ~FunctionCall();
   bool checkTypes(std::vector<Expr*> exprs);
   void printNode();
-  
+  Expr* gen();
+  std::vector<Expr*> getParams();
+  Id* getFunc();
+
 private:
   std::vector<Expr*> params;
   Id* func;

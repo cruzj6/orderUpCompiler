@@ -13,8 +13,12 @@ ServeOut::~ServeOut()
 
 void ServeOut::gen(int b, int a)
 {
-  Temp* temp = new Temp(outExpr->type);
-  emit(temp->toString() + " = " + outExpr->toString());
+  std::stringstream ss;
+  Temp* tBuff = new Temp(outExpr->type);
+  emit(tBuff->toString() + " = " + outExpr->toString());
+  ss << "len " << outExpr->type->width;
+  emit(ss.str());
+  emit("buffer " + tBuff->toString());
   emit("sys_write");
 }
 

@@ -1,4 +1,5 @@
 #include "lexer/word.h"
+#include <iostream>
 
 //Build all of our static words
 Word* Word::LogicAnd = new Word("&&", AND);

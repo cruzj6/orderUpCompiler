@@ -23,12 +23,11 @@ void Function::gen(int b, int a)
   std::vector<Id*>::iterator it;
   for(it = params.begin(); it != params.end(); it++)
   {
-    std::cerr << "OUT PARAM" << std::endl;
     (*it)->gen();
   }
-  std::cerr << "GEN BLOCK" << std::endl;
+
+  //TODO: Return addr label something
   funcBlock->gen(0, a);
-  std::cerr << "END GEN BLOCK" << std::endl;
   emitFunctionEnd();
 
 }

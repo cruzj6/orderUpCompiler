@@ -22,6 +22,13 @@ Expr* ArrayAccess::gen()
   return new ArrayAccess(array, index->reduce(), type);
 }
 
+std::string ArrayAccess::toString()
+{
+  std::stringstream ss;
+  ss << array->toString() << + "[" << index->toString() << "]";
+  return ss.str();
+}
+
 void ArrayAccess::printNode()
 {
   printTabs();

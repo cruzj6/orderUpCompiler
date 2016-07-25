@@ -3,18 +3,10 @@
 #include "comp/expr.h"
 class QFresh : public Stmnt{
 public:
-  QFresh(Expr* cond, Stmnt* st1, Stmnt* st2)
-  {
-    booleanExpr = cond;
-    stmnt = st1;
-    chainStmnt = st2;
-  }
+  QFresh(Expr* cond, Stmnt* st1, Stmnt* st2);
+  ~QFresh();
   void printNode();
-  ~QFresh()
-  {
-    delete booleanExpr;
-    delete stmnt;
-  }
+  void gen(int b, int a);
 private:
   Expr* booleanExpr; //Must be boolean/baconOrSausage Type
   Stmnt* stmnt; //my Stmnt
