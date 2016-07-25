@@ -59,7 +59,7 @@ $(OBJ_DIR)/analyzerTest.o: $(TST_DIR)/analyzerTest.cpp
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $(TST_DIR)/analyzerTest.cpp -o $@
 
 main: $(OBJ_DIR)/main.o $(OBJS)
-	$(CC) $(CPPFLAGS) -o main $(OBJS)
+	$(CC) $(CPPFLAGS) -o oupc $(OBJS)
 
 $(OBJ_DIR)/main.o: $(MAIN_DIR)/main.cpp
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $(MAIN_DIR)/main.cpp -o $@
