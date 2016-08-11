@@ -1,0 +1,45 @@
+wholeMilk @ first;
+wholeMilk @ second;
+wholeMilk @ counter;
+
+breakfastOrder main() orderOf wholeMilk{
+
+  //Do some math
+  first <- 2;
+  second <- 5;
+
+  //Should be 12
+  second <- first * second + 2;
+
+  //Print Result
+  serveOut("Result: ");
+  serveOut(second);
+  serveOut("\n");
+
+  //Should be 2
+  wholeMilk @ remainder;
+  remainder <- 12 % 5;
+  serveOut("Remainder: ");
+  serveOut(remainder);
+  serveOut("\n");
+
+  //Random Math
+  wholeMilk @ test;
+  test <- remainder * (1 + (3/2)) + second * 3;
+  serveOut(test);
+
+  //Test Conditional if num is even or odd and else-if
+  fresh(test % 2 <==> 0)
+  {
+    serveOut("\nThat Number is Even");
+  }
+  ?fresh(test <==> 72)
+  {
+    serveOut("\nThat Number is 72");
+  }
+  expired{
+    serveOut("\nThat Number is Odd");
+  }
+
+  orderUp 0;
+}

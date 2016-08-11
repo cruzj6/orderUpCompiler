@@ -1,0 +1,27 @@
+wholeMilk @ first;
+wholeMilk @ second;
+wholeMilk @ counter;
+
+breakfastOrder main() orderOf wholeMilk{
+  first <- 2;
+  second <- 5;
+  second <- first * second;
+
+  roll(counter : 0 -> second stepBy 2)
+  {
+    serveOut("Loop!\n");
+    fresh(counter % 2 <==> 0)
+    {
+      serveOut("Even Counter: ");
+      serveOut(counter);
+      serveOut("\n");
+    }
+    expired{
+      serveOut("Odd Counter: ");
+      serveOut(counter);
+      serveOut("\n");
+    }
+  }
+
+  orderUp 0;
+}
