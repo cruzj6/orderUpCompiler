@@ -1,6 +1,10 @@
 # orderUpCompiler
 Compiler for my OrderUp language
 
+#Description
+A compiler for the OrderUp language I created, language documentation found in documents folder.
+Currently compiles only to MIPS Assembly.
+
 #Make Instructions
 ###Make Libraries
   From /compiler directory with g++ installed run:
